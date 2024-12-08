@@ -11,6 +11,7 @@ import React from 'react'
 import {formatDistance, Locale} from 'date-fns'
 import {
   ca,
+  da,
   de,
   enGB,
   es,
@@ -47,6 +48,7 @@ const locales: Record<AppLanguage, Locale | undefined> = {
   an: undefined,
   ast: undefined,
   ca,
+  da,
   de,
   ['en-GB']: enGB,
   es,
