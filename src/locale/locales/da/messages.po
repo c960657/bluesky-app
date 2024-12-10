@@ -2013,7 +2013,7 @@ msgstr "Deaktiveret"
 #: src/view/com/composer/Composer.tsx:674
 #: src/view/com/composer/Composer.tsx:853
 msgid "Discard"
-msgstr "Deaktiver"
+msgstr "Kasser"
 
 #: src/screens/Profile/Header/EditProfileDialog.tsx:81
 msgid "Discard changes?"
