@@ -1,12 +1,14 @@
 import '../index.css'
 
 import {AppBskyFeedDefs, AtpAgent} from '@atproto/api'
+import {t} from '@lingui/macro'
 import {h, render} from 'preact'
 
 import logo from '../../assets/logo.svg'
 import {Container} from '../components/container'
 import {Link} from '../components/link'
 import {Post} from '../components/post'
+import I18nProvider from '../locale/i18nProvider'
 import {getRkey} from '../utils'
 
 const root = document.getElementById('app')
@@ -34,11 +36,13 @@ agent
     const pwiOptOut = !!data.thread.post.author.labels?.find(
       label => label.val === '!no-unauthenticated',
     )
-    if (pwiOptOut) {
-      render(<PwiOptOut thread={data.thread} />, root)
-    } else {
-      render(<Post thread={data.thread} />, root)
-    }
+    const page = pwiOptOut ? <PwiOptOut thread={data.thread} /> : <Post thread={data.thread} />
+
+    render(
+      <I18nProvider>
+        {page}
+      </I18nProvider>,
+      root)
   })
   .catch(err => {
     console.error(err)
@@ -56,13 +60,12 @@ function PwiOptOut({thread}: {thread: AppBskyFeedDefs.ThreadViewPost}) {
       </Link>
       <div className="w-full py-12 gap-4 flex flex-col items-center">
         <p className="max-w-80 text-center w-full text-textLight">
-          The author of this post has requested their posts not be displayed on
-          external sites.
+          {t`The author of this post has requested their posts not be displayed on external sites.`}
         </p>
         <Link
           href={href}
           className="max-w-80 rounded-lg bg-brand text-white color-white text-center py-1 px-4 w-full mx-auto">
-          View on Bluesky
+          {t`View on Bluesky`}
         </Link>
       </div>
     </Container>
@@ -78,7 +81,7 @@ function ErrorMessage() {
         <img src={logo} className="h-6" />
       </Link>
       <p className="my-16 text-center w-full text-textLight">
-        Post not found, it may have been deleted.
+        {t`Post not found, it may have been deleted.`}
       </p>
     </Container>
   )

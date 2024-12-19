@@ -1,6 +1,7 @@
 import '../index.css'
 
 import {AppBskyFeedDefs, AppBskyFeedPost, AtUri, BskyAgent} from '@atproto/api'
+import {t} from '@lingui/macro'
 import {h, render} from 'preact'
 import {useEffect, useMemo, useRef, useState} from 'preact/hooks'
 
@@ -9,6 +10,7 @@ import logo from '../../assets/logo.svg'
 import {Container} from '../components/container'
 import {Link} from '../components/link'
 import {Post} from '../components/post'
+import I18nProvider from '../locale/i18nProvider'
 import {niceDate} from '../utils'
 
 const DEFAULT_POST = 'https://bsky.app/profile/emilyliu.me/post/3jzn6g7ixgq2y'
@@ -25,7 +27,7 @@ const agent = new BskyAgent({
   service: 'https://public.api.bsky.app',
 })
 
-render(<LandingPage />, root)
+render(<I18nProvider><LandingPage /></I18nProvider>, root)
 
 function LandingPage() {
   const [uri, setUri] = useState('')
@@ -94,7 +96,7 @@ function LandingPage() {
         )
         if (pwiOptOut) {
           throw new Error(
-            'The author of this post has requested their posts not be displayed on external sites.',
+            t`The author of this post has requested their posts not be displayed on external sites.`,
           )
         }
         setThread(data.thread)
@@ -115,7 +117,9 @@ function LandingPage() {
         <img src={logo} className="h-10" />
       </Link>
 
-      <h1 className="text-4xl font-bold text-center">Embed a Bluesky Post</h1>
+      <h1 className="text-4xl font-bold text-center">
+        {t`Embed a Bluesky Post`}
+      </h1>
 
       <input
         type="text"
@@ -235,7 +239,7 @@ function Snippet({thread}: {thread: AppBskyFeedDefs.ThreadViewPost}) {
           void navigator.clipboard.writeText(snippet)
           setCopied(true)
         }}>
-        {copied ? 'Copied!' : 'Copy code'}
+        {copied ? t`Copied!` : t`Copy code`}
       </button>
     </div>
   )
